@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -22,6 +23,8 @@ public class GameManager : MonoBehaviour
     public Inventory inventory;
     public ForSaleStock stock;
     public Wallet wallet;
+    public HeroManager hero;
+    public TextMeshProUGUI textbox;
     public GameObject IItemPrefab;
 
     public UnityEvent OnPurchasingEnter;
@@ -68,6 +71,19 @@ public class GameManager : MonoBehaviour
         }
         stock.AddEquipment(item);
     }
+
+    public bool SellItem(IItem item)
+    {
+        if (!stock.RemoveItem(item)) return false;
+        wallet.EarnMoney(item.price);
+        return true;
+    }
+
+    public void SetText(string text)
+    {
+        textbox.text = text;
+    }
+
 
     public void ChangeState(GameStates newState)
     {

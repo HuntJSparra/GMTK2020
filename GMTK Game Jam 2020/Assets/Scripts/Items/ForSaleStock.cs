@@ -49,6 +49,18 @@ public class ForSaleStock : MonoBehaviour
         return true;
     }
 
+    public bool RemoveItem(IItem item)
+    {
+        for(int i=0; i<stockDisplays.Count;i++)
+        {
+            if (stockDisplays[i].Equals(item))
+            {
+                return RemoveItem(stockDisplays[i]);
+            }
+        }
+        return false;
+    }
+
     public bool RemoveItem(ItemStockDisplay item)
     {
         if (item is EquipmentStockDisplay) return RemoveEquipment((EquipmentStockDisplay) item);
