@@ -15,8 +15,8 @@ public class EquipmentStockDisplay : ItemStockDisplay
 
     public void SetItem(IEquipment itemToDisplay)
     {
-        base.SetItem((IItem)itemToDisplay);
         equipment = itemToDisplay;
+        base.SetItem((IItem)itemToDisplay);
         setStatBox(equipment.itemOffense, atkBox);
         setStatBox(equipment.itemDefense, defBox);
     }
@@ -36,6 +36,15 @@ public class EquipmentStockDisplay : ItemStockDisplay
             box.text = stat.ToString();
         }
     }
+
+    public override void Empty()
+    {
+        base.Empty();
+        equipment = null;
+        atkBox.text = "";
+        defBox.text = "";
+    }
+
 
 
 }

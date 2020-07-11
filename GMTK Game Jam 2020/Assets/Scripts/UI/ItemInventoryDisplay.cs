@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(Button))]
-public class ItemInventoryDisplay : MonoBehaviour
+public abstract class ItemInventoryDisplay : MonoBehaviour
 {
     public Image icon;
     public TextMeshProUGUI itemNameBox;
@@ -13,27 +14,39 @@ public class ItemInventoryDisplay : MonoBehaviour
     public TextMeshProUGUI moneyBox;
     public Button minusButton;
     public Button plusButton;
+    public Button button;
     IItem item;
 
     private void Start()
     {
-        GetComponent<Button>().onClick.AddListener(OnClick);
+        button = GetComponent<Button>();
+        button.onClick.AddListener(OnClick);
         minusButton.onClick.AddListener(SubtractPrice);
         plusButton.onClick.AddListener(AddPrice);
     }
 
-    public void SetItem(IItem itemToDisplay, int amount)
+    public virtual void SetItem(IItem itemToDisplay, int amount)
     {
         item = itemToDisplay;
         icon.sprite = item.icon;
         itemNameBox.text = item.itemName;
-        amountBox.text = "x "+amount.ToString();
         moneyBox.text = item.price.ToString();
+        SetAmount(amount);
+    }
+
+    public void SetAmount(int amount)
+    {
+        amountBox.text = "x " + amount.ToString();
+        if (amount <= 0) button.enabled = false;
+        else button.enabled = true;
     }
 
     public void OnClick()
     {
+        StockItem();
     }
+
+    protected abstract void StockItem();
 
     public void SubtractPrice()
     {
@@ -48,4 +61,6 @@ public class ItemInventoryDisplay : MonoBehaviour
         if (item.price > 999) item.price = 999;
         moneyBox.text = item.price.ToString();
     }
+
+
 }
