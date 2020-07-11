@@ -39,6 +39,9 @@ public abstract class ItemStockDisplay : MonoBehaviour
     {
         switch (GameManager.instance.state)
         {
+            case (GameManager.GameStates.Purchasing):
+                GameManager.instance.stock.RemoveItem(this);
+                break;
             case (GameManager.GameStates.Stocking):
                 Restock();
                 break;
@@ -62,9 +65,11 @@ public abstract class ItemStockDisplay : MonoBehaviour
         GameManager.instance.wallet.EarnMoney(item.price);
         GameManager.instance.stock.RemoveItem(this);
     }
-    
+
+    public IItem GetItem() { return item; }
 
 
-    
+
+
 
 }

@@ -9,10 +9,12 @@ public class GameManager : MonoBehaviour
 
     public enum GameStates
     {
+        Purchasing,
         Restocking,
         Start,
         Stocking, 
-        Selling
+        Selling,
+        CompletePurchase
     }
 
     public static GameManager instance;
@@ -22,6 +24,8 @@ public class GameManager : MonoBehaviour
     public Wallet wallet;
     public GameObject IItemPrefab;
 
+    public UnityEvent OnPurchasingEnter;
+    public UnityEvent OnCompletePurchase;
     public UnityEvent OnSellingEnter;
     public UnityEvent OnStockingEnter;
     public UnityEvent OnRestockingEnter;
@@ -38,13 +42,13 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         stateMachine = GetComponent<Animator>();
-        for (int i=0; i<20; i++)
+        /*for (int i=0; i<20; i++)
         {
             GameObject IItemObject = Instantiate(IItemPrefab);
             IItem item = IItemObject.GetComponent<IItem>();
             item.itemName = "Item " + i;
             inventory.AddItem(item);
-        }
+        }*/
         inventory.GenerateInventoryGUI();
 
     }
@@ -57,9 +61,12 @@ public class GameManager : MonoBehaviour
 
     public void StockEquipment(IEquipment item)
     {
-        if (!ItemInStock(item)) return;
+        if (state != GameStates.Purchasing)
+        {
+            if (!ItemInStock(item)) return;
+            inventory.DecrementAmount(item);
+        }
         stock.AddEquipment(item);
-        inventory.DecrementAmount(item);
     }
 
     public void ChangeState(GameStates newState)
@@ -67,6 +74,12 @@ public class GameManager : MonoBehaviour
         state = newState;
         switch (state)
         {
+            case (GameStates.Purchasing):
+                OnPurchasingEnter.Invoke();
+                break;
+            case (GameStates.CompletePurchase):
+                OnCompletePurchase.Invoke();
+                break;
             case(GameStates.Stocking):
                 OnStockingEnter.Invoke();
                 break;
@@ -77,6 +90,11 @@ public class GameManager : MonoBehaviour
                 OnRestockingEnter.Invoke();
                 break;
         }
+    }
+
+    public void Purchasing(bool purchasing)
+    {
+        stateMachine.SetBool("Purchasing", purchasing);
     }
 
     public void Selling(bool selling)

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +10,13 @@ public class Inventory : MonoBehaviour
     public GameObject equipmentDisplayPrefab;
     public float displayOffset = 10;
     public ScrollRect scrollRect;
+
+    TextMeshProUGUI scrollTitle;
+    bool catalogueMode = false;
+
+    public List<IItem> level0Items = new List<IItem>();
+    int level = -1;
+
     List<IItem> items = new List<IItem>();
     Dictionary<IItem, int> amounts = new Dictionary<IItem, int>();
     Dictionary<IItem, ItemInventoryDisplay> displays = new Dictionary<IItem, ItemInventoryDisplay>(); 
@@ -20,6 +28,8 @@ public class Inventory : MonoBehaviour
             Debug.LogError("Error! The Inventory Display Prefab must have an ItemInventoryDisplay!");
             Application.Quit();
         }
+        scrollTitle = scrollRect.GetComponentInChildren<TextMeshProUGUI>();
+        UnlockItems();
     }
 
     public void AddItem(IItem item, int amount = 1)
@@ -73,4 +83,38 @@ public class Inventory : MonoBehaviour
         float contentHeight = (items.Count * prefabSize.y) + ((items.Count + 2) * displayOffset);
         scrollRect.content.sizeDelta = new Vector2(scrollRect.content.sizeDelta.x, contentHeight);
     }
+
+    public void SwitchModes()
+    {
+        foreach (ItemInventoryDisplay display in displays.Values)
+        {
+            display.SwitchModes();
+        }
+
+        if (catalogueMode)
+        {
+            scrollTitle.text = "Inventory";
+            catalogueMode = false;
+        }
+        else
+        {
+            scrollTitle.text = "Catalogue";
+            catalogueMode = true;
+        }
+    }
+
+    public void UnlockItems()
+    {
+        level++;
+        if (level == 0) AddToInventory(level0Items);
+    }
+
+    void AddToInventory(List<IItem> items)
+    {
+        foreach (IItem item in items)
+            AddItem(item, 0);
+    }
+
+   
+
 }

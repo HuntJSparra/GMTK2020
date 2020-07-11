@@ -15,6 +15,8 @@ public abstract class ItemInventoryDisplay : MonoBehaviour
     public Button minusButton;
     public Button plusButton;
     public Button button;
+
+    bool catalogueMode = false;
     IItem item;
 
     private void Start()
@@ -36,8 +38,12 @@ public abstract class ItemInventoryDisplay : MonoBehaviour
 
     public void SetAmount(int amount)
     {
-        amountBox.text = "x " + amount.ToString();
-        if (amount <= 0) button.enabled = false;
+        if (catalogueMode)
+            amountBox.text = "Owned: " + amount.ToString();
+        else
+            amountBox.text = "x " + amount.ToString();
+        if (GameManager.instance.state != GameManager.GameStates.Purchasing 
+            && amount <= 0) button.enabled = false;
         else button.enabled = true;
     }
 
@@ -61,6 +67,28 @@ public abstract class ItemInventoryDisplay : MonoBehaviour
         if (item.price > 999) item.price = 999;
         moneyBox.text = item.price.ToString();
     }
+
+    public void SwitchModes()
+    {
+        if (catalogueMode)
+        {
+            minusButton.gameObject.SetActive(true);
+            plusButton.gameObject.SetActive(true);
+            catalogueMode = false;
+            SetAmount(GameManager.instance.inventory.GetAmount(item));
+        }
+        else
+        {
+            minusButton.gameObject.SetActive(false);
+            plusButton.gameObject.SetActive(false);
+            catalogueMode = true;
+            SetAmount(GameManager.instance.inventory.GetAmount(item));
+            item.price = item.GetBasePrice();
+            moneyBox.text = item.price.ToString();
+        }
+    }
+
+    public IItem GetItem() { return item; }
 
 
 }

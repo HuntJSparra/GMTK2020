@@ -58,7 +58,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -300,6 +300,7 @@ MonoBehaviour:
   icon: {fileID: 8730889045684240749}
   itemNameBox: {fileID: 9070210679019836553}
   moneyBox: {fileID: 6370300747075800926}
+  button: {fileID: 0}
   atkBox: {fileID: 7135577147001964808}
   defBox: {fileID: 1870615571799900415}
   positiveColor: {r: 1, g: 0, b: 0, a: 0}
