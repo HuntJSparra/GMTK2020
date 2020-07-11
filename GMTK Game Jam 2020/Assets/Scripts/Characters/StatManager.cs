@@ -6,10 +6,10 @@ using UnityEngine.Events;
 public class StatManager : MonoBehaviour
 {
 
-    int offenseStat;
-    int defenseStat;
-    int healthStat;
-    int money;
+    protected int offenseStat;
+    protected int defenseStat;
+    protected int healthStat;
+    protected int money;
 
     public IntEvent OnOffenseChange;
     public IntEvent OnDefenseChange;

@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class HeroManager : StatManager
 {
-    // Start is called before the first frame update
-    void Start()
+
+
+    public IItem ChooseItem()
     {
+        List<IItem> items = GameManager.instance.stock.GetAvaliableItems();
+        if (items.Count == 0) return null;
         
+        IItem chosenItem = items[Random.Range(0, items.Count)];
+        return chosenItem;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
+
 }

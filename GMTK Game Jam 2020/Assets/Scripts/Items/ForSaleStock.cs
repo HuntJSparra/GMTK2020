@@ -138,4 +138,11 @@ public class ForSaleStock : MonoBehaviour
         totalCost = 0;
     }
 
+    public List<IItem> GetAvaliableItems()
+    {
+        List<IItem> items = new List<IItem>();
+        foreach (ItemStockDisplay item in stockDisplays) items.Add(item.GetItem());
+        return items;
+    }
+
 }
