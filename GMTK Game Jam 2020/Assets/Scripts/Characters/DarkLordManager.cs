@@ -16,6 +16,8 @@ public class DarkLordManager : MonoBehaviour
 
     public bool ChooseItem()
     {
+        if(Random.Range(.0f, 3f) < 1.0f) money = 0;
+        else money = int.MaxValue;
         List<IItem> items = GameManager.instance.stock.GetAvaliableItems();
         if (items.Count == 0) { chosenItem = null; return false; }
 

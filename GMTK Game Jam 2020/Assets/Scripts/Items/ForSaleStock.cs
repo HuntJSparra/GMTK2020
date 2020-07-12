@@ -144,7 +144,10 @@ public class ForSaleStock : MonoBehaviour
     {
         while (stockDisplays.Count > 0)
         {
-            stockDisplays[0].Restock();
+            if (purchaseMode)
+                RemoveItem(stockDisplays[0]);
+            else
+                stockDisplays[0].Restock();
         }
         stockDisplays.Clear();
         equipmentStocks.Clear();

@@ -8,7 +8,7 @@ public class QuestDisplay : MonoBehaviour
     public TextMeshProUGUI titleText;
     public TextMeshProUGUI attackText;
     public TextMeshProUGUI defenseText;
-    public TextMeshProUGUI descriptionText;
+    public TextMeshProUGUI healthText;
     Quest quest;
     int heroAtk;
     int questAtk;
@@ -31,8 +31,10 @@ public class QuestDisplay : MonoBehaviour
         quest.OnDefenseChange.AddListener(UpdateDefense);
         UpdateHeroOffense(GameManager.instance.hero.GetOffense());
         UpdateHeroDefense(GameManager.instance.hero.GetDefense());
+        UpdateHealthDisplay(GameManager.instance.hero.GetHealth());
         GameManager.instance.hero.OnOffenseChange.AddListener(UpdateHeroOffense);
         GameManager.instance.hero.OnDefenseChange.AddListener(UpdateHeroDefense);
+        GameManager.instance.hero.OnHealthChange.AddListener(UpdateHealthDisplay);
     }
 
     public void UpdateOffense(int Atk)
@@ -67,6 +69,11 @@ public class QuestDisplay : MonoBehaviour
     void UpdateDefenseDisplay()
     {
         defenseText.text = "Hero Defense: " + heroDef + "\n Evil Defense: " + questDef;
+    }
+
+    void UpdateHealthDisplay(int health)
+    {
+        healthText.text = "Hero Health: " + health;
     }
 
 

@@ -128,13 +128,13 @@ public class GameManager : MonoBehaviour
     public void InitSelling()
     {
         Debug.Log("Init selling");
-        numTransactions = Random.Range(1, 3);
+        numTransactions = Random.Range(1, 4);
         ChooseVisitor();
     }
 
     public void ChooseVisitor()
     {
-        if (Random.Range(.0f, 2f) <= 1f)
+        if (Random.Range(.0f, 5f) < 2f || numTransactions == 1)
         {
             GameManager.instance.HeroAppears.Invoke();
             stateMachine.SetBool("Sell2Hero", true);
