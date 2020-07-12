@@ -115,6 +115,13 @@ public class Inventory : MonoBehaviour
             AddItem(item, 0);
     }
 
+    public int GetTotalInventory()
+    {
+        int sum = 0;
+        foreach (int amount in amounts.Values)
+            sum += amount;
+        return sum;
+    }
    
 
 }

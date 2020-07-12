@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     public ForSaleStock stock;
     public Wallet wallet;
     public HeroManager hero;
+    public DarkLordManager darkLord;
     public TextMeshProUGUI textbox;
     public Button nextButton;
     public Button yesButton;
@@ -37,7 +38,9 @@ public class GameManager : MonoBehaviour
     public UnityEvent OnStockingEnter;
     public UnityEvent OnRestockingEnter;
     public UnityEvent HeroAppears;
+    public UnityEvent DarkLordAppears;
 
+    int numTransactions = -1;
     Animator stateMachine;
 
     private void Awake()
@@ -69,12 +72,12 @@ public class GameManager : MonoBehaviour
 
     public void StockEquipment(IEquipment item)
     {
-        if (state != GameStates.Purchasing)
+        bool stocked = stock.AddEquipment(item);
+        if (stocked && state != GameStates.Purchasing)
         {
             if (!ItemInStock(item)) return;
             inventory.DecrementAmount(item);
         }
-        stock.AddEquipment(item);
     }
 
     public bool SellItem(IItem item)
@@ -99,8 +102,32 @@ public class GameManager : MonoBehaviour
         noButton.gameObject.SetActive(true);
     }
 
+    public void InitSelling()
+    {
+        numTransactions = Random.Range(1, 3);
+        ChooseVisitor();
+    }
+
+    public void ChooseVisitor()
+    {
+        if (Random.Range(.0f, 2f) <= 1f)
+            stateMachine.SetBool("Sell2Hero", true);
+        else
+            stateMachine.SetBool("Sell2Villain", true);
+    }
+
+    public void VisitorLeaves()
+    {
+        numTransactions--;
+        if (numTransactions <= 0)
+            Selling(false);
+        else
+            ChooseVisitor();
+    }
+
     public void ChangeState(GameStates newState)
     {
+        //if (state == newState) return;
         state = newState;
         switch (state)
         {
@@ -118,6 +145,7 @@ public class GameManager : MonoBehaviour
                 break;
             case (GameStates.Restocking):
                 OnRestockingEnter.Invoke();
+                Selling(false);
                 break;
         }
     }
@@ -135,6 +163,8 @@ public class GameManager : MonoBehaviour
     public void FullyStocked(bool stocked)
     {
         stateMachine.SetBool("FullyStocked", stocked);
+        if (!stocked && inventory.GetTotalInventory() == 0)
+            Selling(false);
     }
 
     public void NextDialogue()

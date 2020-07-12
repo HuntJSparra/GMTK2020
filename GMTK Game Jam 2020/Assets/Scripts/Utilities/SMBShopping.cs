@@ -6,7 +6,8 @@ public class SMBShopping : StateMachineBehaviour
 {
     public enum Shopper
     {
-        hero
+        hero,
+        darklord
     }
     public enum Action
     {
@@ -23,7 +24,7 @@ public class SMBShopping : StateMachineBehaviour
     //OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-       if (shopperName == Shopper.hero)
+        if (shopperName == Shopper.hero)
         {
             GameManager.instance.HeroAppears.Invoke();
             switch (action)
@@ -49,10 +50,39 @@ public class SMBShopping : StateMachineBehaviour
                     animator.SetBool("Sell2Hero", false);
                     GameManager.instance.hero.sprite.enabled = false;
                     GameManager.instance.SetText("");
+                    GameManager.instance.VisitorLeaves();
                     break;
             }
-
-
+        }
+        else if (shopperName == Shopper.darklord)
+        {
+            GameManager.instance.DarkLordAppears.Invoke();
+            switch (action)
+            {
+                case (Action.RequestItem):
+                    if (GameManager.instance.darkLord.ChooseItem())
+                    {
+                        GameManager.instance.SetText(GameManager.instance.darkLord.RequestString());
+                    }
+                    break;
+                case (Action.GiveChoice):
+                    animator.SetInteger("ChoiceResponse", 0);
+                    GameManager.instance.GiveChoice("Please use it well.", "Um, well…you’re not a high enough level to use that.");
+                    break;
+                case (Action.RefusePurchase):
+                    GameManager.instance.SetText(GameManager.instance.darkLord.LeaveString());
+                    break;
+                case (Action.AcceptPurchase):
+                    GameManager.instance.darkLord.BuyItem();
+                    GameManager.instance.SetText(GameManager.instance.darkLord.LeaveString());
+                    break;
+                case (Action.Leave):
+                    animator.SetBool("Sell2Villain", false);
+                    GameManager.instance.darkLord.sprite.enabled = false;
+                    GameManager.instance.SetText("");
+                    GameManager.instance.VisitorLeaves();
+                    break;
+            }
         }   
     }
 

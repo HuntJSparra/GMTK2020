@@ -360,8 +360,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1988023054}
   m_HandleRect: {fileID: 1988023053}
   m_Direction: 2
-  m_Value: 0
-  m_Size: 0.000008634821
+  m_Value: 1
+  m_Size: 0.9864341
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -462,7 +462,7 @@ Transform:
   m_LocalScale: {x: 51.08299, y: 45.798035, z: 1}
   m_Children: []
   m_Father: {fileID: 1762950279}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &132075762
 SpriteRenderer:
@@ -637,7 +637,7 @@ RectTransform:
   m_Children:
   - {fileID: 933199348}
   m_Father: {fileID: 1762950279}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -902,7 +902,7 @@ MonoBehaviour:
   offenseStartingStat: 10
   defenseStartingStat: 10
   healthStartingStat: 10
-  moneyStartingStat: 15
+  moneyStartingStat: 100
   sprite: {fileID: 0}
 --- !u!1 &363180925
 GameObject:
@@ -1038,7 +1038,7 @@ RectTransform:
   m_Children:
   - {fileID: 1296125792}
   m_Father: {fileID: 1762950279}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1400,7 +1400,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.0000076293945, y: 7.000061}
+  m_AnchoredPosition: {x: -0.0000076293945, y: 0.000030517578}
   m_SizeDelta: {x: 0.000015258789, y: 515.9999}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &481255006
@@ -1548,7 +1548,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1762950279}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2446,6 +2446,7 @@ MonoBehaviour:
   stock: {fileID: 736808787}
   wallet: {fileID: 530814100}
   hero: {fileID: 233156346}
+  darkLord: {fileID: 1606440811}
   textbox: {fileID: 205814739}
   nextButton: {fileID: 1691550203}
   yesButton: {fileID: 1410531898}
@@ -2636,6 +2637,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 842455771}
+        m_MethodName: InitSelling
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   OnStockingEnter:
     m_PersistentCalls:
       m_Calls:
@@ -2755,6 +2767,20 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+  DarkLordAppears:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1606440810}
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!4 &842455772
 Transform:
   m_ObjectHideFlags: 0
@@ -2823,7 +2849,7 @@ RectTransform:
   - {fileID: 777297596}
   - {fileID: 38933581}
   m_Father: {fileID: 1762950279}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2966,7 +2992,7 @@ RectTransform:
   - {fileID: 205814738}
   - {fileID: 1691550202}
   m_Father: {fileID: 1762950279}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3544,7 +3570,7 @@ RectTransform:
   m_Children:
   - {fileID: 715464467}
   m_Father: {fileID: 1762950279}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3881,6 +3907,110 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1592802545}
   m_CullTransparentMesh: 0
+--- !u!1 &1606440808
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1606440809}
+  - component: {fileID: 1606440812}
+  - component: {fileID: 1606440811}
+  - component: {fileID: 1606440810}
+  m_Layer: 5
+  m_Name: Dark Lord
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1606440809
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1606440808}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 3, y: 3, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1762950279}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -142, y: -8}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1606440810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1606440808}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 86ad2241b0706344282a806842224496, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1606440811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1606440808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 336f9660af519154dab6fd836d2ffb4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnOffenseChange:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDefenseChange:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHealthChange:
+    m_PersistentCalls:
+      m_Calls: []
+  OnMoneyChange:
+    m_PersistentCalls:
+      m_Calls: []
+  offenseStartingStat: 15
+  defenseStartingStat: 15
+  healthStartingStat: 15
+  moneyStartingStat: 100
+  sprite: {fileID: 1606440810}
+--- !u!222 &1606440812
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1606440808}
+  m_CullTransparentMesh: 0
 --- !u!1 &1661241016
 GameObject:
   m_ObjectHideFlags: 0
@@ -4132,7 +4262,7 @@ GameObject:
   - component: {fileID: 1762950277}
   - component: {fileID: 1762950276}
   m_Layer: 5
-  m_Name: Sell2Hero - Refuse
+  m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4210,6 +4340,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 233156343}
+  - {fileID: 1606440809}
   - {fileID: 889995102}
   - {fileID: 863347339}
   - {fileID: 1792101435}
@@ -4264,7 +4395,7 @@ RectTransform:
   - {fileID: 507734583}
   - {fileID: 1592802546}
   m_Father: {fileID: 1762950279}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -4765,7 +4896,7 @@ RectTransform:
   m_Children:
   - {fileID: 2086627792}
   m_Father: {fileID: 1762950279}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -4960,7 +5091,7 @@ RectTransform:
   m_Children:
   - {fileID: 596363708}
   m_Father: {fileID: 1762950279}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -5090,7 +5221,7 @@ RectTransform:
   m_Children:
   - {fileID: 1792790517}
   m_Father: {fileID: 1762950279}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

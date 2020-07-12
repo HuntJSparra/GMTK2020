@@ -52,9 +52,9 @@ public class HeroManager : StatManager
         if (chosenItem != null)
         {
             chosenItem = null;
-            return "Fine, I'll go somewhere else, nya...";
+            return "Hero: Fine, I'll go somewhere else, nya...";
         }
-        return "Thank you so much, nya! Time to save the world!";
+        return "Hero: Thank you so much, nya! Time to save the world!";
     }
 
     public void UseItem(IItem item)
