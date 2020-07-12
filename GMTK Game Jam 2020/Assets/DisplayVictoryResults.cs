@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DisplayVictoryResults : MonoBehaviour
 {
-    public int playerScore;
+    public static int playerScore;
 
     public float scoreDelay;
 

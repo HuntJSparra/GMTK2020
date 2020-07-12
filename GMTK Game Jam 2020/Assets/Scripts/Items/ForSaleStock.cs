@@ -110,7 +110,7 @@ public class ForSaleStock : MonoBehaviour
     {
         if (!potionStocks.Contains(item))
             return false;
-        if (stockDisplays.Count == maxStock) ReadyToSell.Invoke(false);
+        if (stockDisplays.Count + GameManager.instance.inventory.GetTotalInventory() == maxStock) ReadyToSell.Invoke(false);
         if (purchaseMode)
         {
             UpdateCost(-(item.GetItem().price));
@@ -179,7 +179,7 @@ public class ForSaleStock : MonoBehaviour
     {
         if (!purchaseMode) return;
         totalCost += cost;
-        if (totalCost > GameManager.instance.wallet.money || stockDisplays.Count < maxStock)
+        if (totalCost > GameManager.instance.wallet.money || stockDisplays.Count + GameManager.instance.inventory.GetTotalInventory() < maxStock)
         {
             purchaseButton.enabled = false;
             //purchaseButton.GetComponent<Image>().enabled = false;

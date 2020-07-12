@@ -834,8 +834,8 @@ MonoBehaviour:
   OnMoneyChange:
     m_PersistentCalls:
       m_Calls: []
-  offenseStartingStat: 0
-  defenseStartingStat: 0
+  offenseStartingStat: 100
+  defenseStartingStat: 100
   healthStartingStat: 3
   moneyStartingStat: 100
   sprite: {fileID: 0}
@@ -2924,8 +2924,6 @@ MonoBehaviour:
   - {fileID: 6217741688467854170, guid: cd1ca91db55c4db439d21223cc1cb697, type: 3}
   - {fileID: 935365623586282599, guid: 735e18b72a8b93449b6455b6fbc15b03, type: 3}
   - {fileID: 6422701381137471045, guid: 055e18765cbac574281ba085527c33bb, type: 3}
-  - {fileID: 5129135302594039486, guid: 630b5c9589f7f08459b1161c4d94a36d, type: 3}
-  - {fileID: 2249278854446723024, guid: 859c0b3190944ba4db1762c54cd3d346, type: 3}
   - {fileID: 2567323628268990656, guid: 2782508721ea84b9cac5c54da9f653a5, type: 3}
   - {fileID: 3963328864926968518, guid: daa40e6a761a44902aea500db6d33380, type: 3}
   - {fileID: 2515263189731880735, guid: 65de9869db75f4f0886f611a8e196fc6, type: 3}
@@ -3185,6 +3183,39 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1568183477}
+        m_MethodName: set_raycastTarget
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 660586631}
+        m_MethodName: set_raycastTarget
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 409641335}
+        m_MethodName: set_raycastTarget
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
         m_CallState: 2
   OnCompletePurchase:
     m_PersistentCalls:

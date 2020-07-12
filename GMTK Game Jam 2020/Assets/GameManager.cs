@@ -178,7 +178,8 @@ public class GameManager : MonoBehaviour
 
         if (activeQuest >= quests.Length)
         {
-            SceneManager.LoadScene("ShopScene");
+            DisplayVictoryResults.playerScore = wallet.money;
+            SceneManager.LoadScene("Victory");
             return;
         }
 

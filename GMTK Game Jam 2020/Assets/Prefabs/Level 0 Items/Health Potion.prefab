@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Health Potion
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 964bb9e4302f24144a8f4e8ed1256682, type: 3}
   description: 
   price: 20
   stat: 2
