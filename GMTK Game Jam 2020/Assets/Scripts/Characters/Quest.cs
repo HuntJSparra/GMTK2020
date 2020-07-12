@@ -7,6 +7,7 @@ public class Quest : MonoBehaviour
 {
 
     public string questName;
+    public int questReward;
     public Vector2 attackRange;
     public Vector2 defenseRange;
     public string description;
@@ -39,11 +40,12 @@ public class Quest : MonoBehaviour
         OnDefenseChange.Invoke(defenseNeeded);
     }
 
-    public bool AttemptQuest(HeroManager hero, out string message)
+    public bool AttemptQuest(HeroManager hero, out int reward, out string message)
     {
         if (completed)
         {
             message = "Quest already completed!";
+            reward = 0;
             return true;
         }
         if (hero.GetOffense() < attackNeeded || hero.GetDefense() < defenseNeeded)
@@ -51,9 +53,11 @@ public class Quest : MonoBehaviour
             if (hero.GetOffense() < attackNeeded) message = failMsgSword;
             else message = failMsgArmor;
             hero.DecreaseHealth(-1);
+            reward = questReward / 2;
             return false;
         }
         message = successMsg;
+        reward = questReward;
         return true;
     }
 

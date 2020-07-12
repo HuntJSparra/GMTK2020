@@ -26,12 +26,12 @@ public class SMBShopping : StateMachineBehaviour
     {
         if (shopperName == Shopper.hero)
         {
-            GameManager.instance.HeroAppears.Invoke();
             switch (action)
             {
                 case (Action.RequestItem):
                     if (GameManager.instance.hero.ChooseItem())
                     {
+                        GameManager.instance.HeroSpeaks.Invoke();
                         GameManager.instance.SetText(GameManager.instance.hero.RequestString());
                     }
                     break;
@@ -40,10 +40,12 @@ public class SMBShopping : StateMachineBehaviour
                     GameManager.instance.GiveChoice("Please use it well.", "Um, well…you’re not a high enough level to use that.");
                     break;
                 case (Action.RefusePurchase):
+                    GameManager.instance.HeroSpeaks.Invoke();
                     GameManager.instance.SetText(GameManager.instance.hero.LeaveString());
                     break;
                 case (Action.AcceptPurchase):
                     GameManager.instance.hero.BuyItem();
+                    GameManager.instance.HeroSpeaks.Invoke();
                     GameManager.instance.SetText(GameManager.instance.hero.LeaveString());
                     break;
                 case (Action.Leave):
@@ -56,12 +58,12 @@ public class SMBShopping : StateMachineBehaviour
         }
         else if (shopperName == Shopper.darklord)
         {
-            GameManager.instance.DarkLordAppears.Invoke();
             switch (action)
             {
                 case (Action.RequestItem):
                     if (GameManager.instance.darkLord.ChooseItem())
                     {
+                        GameManager.instance.DarkLordSpeaks.Invoke();
                         GameManager.instance.SetText(GameManager.instance.darkLord.RequestString());
                     }
                     break;
@@ -70,16 +72,19 @@ public class SMBShopping : StateMachineBehaviour
                     GameManager.instance.GiveChoice("Please use it well.", "Um, well…you’re not a high enough level to use that.");
                     break;
                 case (Action.RefusePurchase):
+                    GameManager.instance.DarkLordSpeaks.Invoke();
                     GameManager.instance.SetText(GameManager.instance.darkLord.LeaveString());
                     break;
                 case (Action.AcceptPurchase):
                     GameManager.instance.darkLord.BuyItem();
+                    GameManager.instance.DarkLordSpeaks.Invoke();
                     GameManager.instance.SetText(GameManager.instance.darkLord.LeaveString());
                     break;
                 case (Action.Leave):
                     animator.SetBool("Sell2Villain", false);
                     GameManager.instance.darkLord.sprite.enabled = false;
                     GameManager.instance.SetText("");
+                    GameManager.instance.DarkLordLeaves.Invoke();
                     GameManager.instance.VisitorLeaves();
                     break;
             }

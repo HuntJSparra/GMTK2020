@@ -67,4 +67,8 @@ public class HeroManager : StatManager
         }
     }
 
+    public void GainMoney(int amount)
+    {
+        money += amount;
+    }
 }

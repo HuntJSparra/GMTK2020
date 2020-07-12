@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Animator))]
@@ -14,7 +15,7 @@ public class GameManager : MonoBehaviour
         Purchasing,
         Restocking,
         Start,
-        Stocking, 
+        Stocking,
         Selling,
         CompletePurchase,
         DoQuest,
@@ -41,7 +42,10 @@ public class GameManager : MonoBehaviour
     public UnityEvent OnStockingEnter;
     public UnityEvent OnRestockingEnter;
     public UnityEvent HeroAppears;
+    public UnityEvent HeroSpeaks;
     public UnityEvent DarkLordAppears;
+    public UnityEvent DarkLordSpeaks;
+    public UnityEvent DarkLordLeaves;
 
     int numTransactions = -1;
     int activeQuest = -1;
@@ -108,25 +112,39 @@ public class GameManager : MonoBehaviour
     public void ChooseVisitor()
     {
         if (Random.Range(.0f, 2f) <= 1f)
+        {
+            GameManager.instance.HeroAppears.Invoke();
             stateMachine.SetBool("Sell2Hero", true);
+        }
         else
+        {
+            GameManager.instance.DarkLordAppears.Invoke();
             stateMachine.SetBool("Sell2Villain", true);
+        }
     }
 
     public void VisitorLeaves()
     {
         numTransactions--;
         if (numTransactions <= 0)
+        {
             Selling(false);
+        }
         else
+        {
             ChooseVisitor();
+        }
     }
 
     public void AttemptActiveQuest()
     {
         string message = "";
-        bool success = quests[activeQuest].AttemptQuest(hero, out message);
+        int reward = 0;
+        bool success = quests[activeQuest].AttemptQuest(hero, out reward, out message);
+
+        hero.GainMoney(reward);
         SetText(message);
+
         stateMachine.SetBool("QuestSuccess", success);
     }
 
@@ -134,10 +152,17 @@ public class GameManager : MonoBehaviour
     {
         inventory.UnlockItems();
         activeQuest++;
+
+        if (activeQuest >= quests.Length)
+        {
+            SceneManager.LoadScene("ShopScene");
+            return;
+        }
+
         questDisplay.SetQuest(quests[activeQuest]);
         SetText(quests[activeQuest].description);
     }
-    
+
     public void IncreaseActiveQuestDefense(int attackBoost)
     { quests[activeQuest].IncreaseDefenseNeeded(attackBoost); }
 
@@ -159,7 +184,7 @@ public class GameManager : MonoBehaviour
             case (GameStates.CompletePurchase):
                 OnCompletePurchase.Invoke();
                 break;
-            case(GameStates.Stocking):
+            case (GameStates.Stocking):
                 OnStockingEnter.Invoke();
                 break;
             case (GameStates.Selling):
@@ -187,7 +212,7 @@ public class GameManager : MonoBehaviour
     {
         stateMachine.SetBool("Selling", selling);
     }
-    
+
     public void FullyStocked(bool stocked)
     {
         stateMachine.SetBool("FullyStocked", stocked);
