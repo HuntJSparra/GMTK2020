@@ -39,18 +39,24 @@ public class DisplayVictoryResults : MonoBehaviour
         // Generate scores
         scores = new Result[4];
 
+        bool playerPlaced = false;
         int scoreIndex = 0;
-        int presetScoreIndex = 0;
-        for (; scoreIndex<scores.Length; scoreIndex++)
+        for (int presetScoreIndex=0; presetScoreIndex < presetScores.Length; presetScoreIndex++)
         {
-            if (playerScore > presetScores[presetScoreIndex].score)
+            if (!playerPlaced && (playerScore > presetScores[presetScoreIndex].score))
             {
                 scores[scoreIndex] = new Result(true, "You", "The Player", playerScore);
                 scoreIndex++;
+                playerPlaced = true;
             }
 
             scores[scoreIndex] = presetScores[presetScoreIndex];
-            presetScoreIndex++;
+            scoreIndex++;
+        }
+
+        if (!playerPlaced)
+        {
+            scores[scoreIndex] = new Result(true, "You", "The Player", playerScore);
         }
 
         StartCoroutine(ShowResults());
