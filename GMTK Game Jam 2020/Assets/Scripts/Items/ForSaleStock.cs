@@ -11,6 +11,7 @@ public class ForSaleStock : MonoBehaviour
     public int maxStock;
     public int maxStockPurchases;
     public GameObject equipmentDisplayPrefab;
+    public GameObject potionDisplayPrefab;
     public float displayOffset = 10;
     public Button purchaseButton;
 
@@ -18,6 +19,7 @@ public class ForSaleStock : MonoBehaviour
 
     List<ItemStockDisplay> stockDisplays = new List<ItemStockDisplay>();
     List<EquipmentStockDisplay> equipmentStocks = new List<EquipmentStockDisplay>();
+    List<PotionStockDisplay> potionStocks = new List<PotionStockDisplay>();
     public bool purchaseMode = false;
     int totalCost;
     TextMeshProUGUI title;
@@ -52,6 +54,23 @@ public class ForSaleStock : MonoBehaviour
         return true;
     }
 
+    public bool AddPotion(IPotion item)
+    {
+        if ((!purchaseMode && stockDisplays.Count >= maxStock) || (purchaseMode && stockDisplays.Count >= maxStockPurchases))
+            return false;
+        PotionStockDisplay potionStock = Instantiate(potionDisplayPrefab, stockRect.content).GetComponent<PotionStockDisplay>();
+        potionStock.SetItem(item);
+        stockDisplays.Add(potionStock);
+        potionStocks.Add(potionStock);
+        if (purchaseMode)
+        {
+            UpdateCost(item.GetBasePrice());
+        }
+        ResizeStockRect();
+        if (stockDisplays.Count == maxStock) ReadyToSell.Invoke(true);
+        return true;
+    }
+
     public bool RemoveItem(IItem item)
     {
         for(int i=0; i<stockDisplays.Count;i++)
@@ -67,6 +86,7 @@ public class ForSaleStock : MonoBehaviour
     public bool RemoveItem(ItemStockDisplay item)
     {
         if (item is EquipmentStockDisplay) return RemoveEquipment((EquipmentStockDisplay) item);
+        if (item is PotionStockDisplay) return RemovePotion((PotionStockDisplay)item);
         return false;
     }
 
@@ -80,6 +100,22 @@ public class ForSaleStock : MonoBehaviour
             UpdateCost(-(item.GetItem().price));
         }
         equipmentStocks.Remove(item);
+        stockDisplays.Remove(item);
+        Destroy(item.gameObject);
+        ResizeStockRect();
+        return true;
+    }
+
+    public bool RemovePotion(PotionStockDisplay item)
+    {
+        if (!potionStocks.Contains(item))
+            return false;
+        if (stockDisplays.Count == maxStock) ReadyToSell.Invoke(false);
+        if (purchaseMode)
+        {
+            UpdateCost(-(item.GetItem().price));
+        }
+        potionStocks.Remove(item);
         stockDisplays.Remove(item);
         Destroy(item.gameObject);
         ResizeStockRect();
@@ -110,6 +146,9 @@ public class ForSaleStock : MonoBehaviour
         {
             RemoveItem(stockDisplays[0]);
         }
+        stockDisplays.Clear();
+        equipmentStocks.Clear();
+        potionStocks.Clear();
     }
 
     public void SwitchModes()
@@ -125,7 +164,7 @@ public class ForSaleStock : MonoBehaviour
             title.text = "Purchasing: ";
             purchaseButton.gameObject.SetActive(true);
             purchaseButton.enabled = false;
-            purchaseButton.GetComponent<Image>().enabled = false;
+            //purchaseButton.GetComponent<Image>().enabled = false;
         }
         purchaseMode = !purchaseMode;
     }
@@ -143,13 +182,13 @@ public class ForSaleStock : MonoBehaviour
         if (totalCost > GameManager.instance.wallet.money || stockDisplays.Count < maxStock)
         {
             purchaseButton.enabled = false;
-            purchaseButton.GetComponent<Image>().enabled = false;
+            //purchaseButton.GetComponent<Image>().enabled = false;
             purchaseButtonTitle.text = "Cost: " + totalCost;
         }
         else
         {
             purchaseButton.enabled = true;
-            purchaseButton.GetComponent<Image>().enabled = true;
+            //purchaseButton.GetComponent<Image>().enabled = true;
             purchaseButtonTitle.text = "Purchase? Cost: " + totalCost;
         }
     }

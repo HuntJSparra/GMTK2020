@@ -10,6 +10,10 @@ public class QuestDisplay : MonoBehaviour
     public TextMeshProUGUI defenseText;
     public TextMeshProUGUI descriptionText;
     Quest quest;
+    int heroAtk;
+    int questAtk;
+    int heroDef;
+    int questDef;
 
 
     public void SetQuest(Quest newQuest)
@@ -23,25 +27,48 @@ public class QuestDisplay : MonoBehaviour
         titleText.text = quest.questName;
         UpdateOffense(quest.GetAttackNeeded());
         UpdateDefense(quest.GetDefenseNeeded());
-        UpdateDescription(quest.description);
         quest.OnOffenseChange.AddListener(UpdateOffense);
         quest.OnDefenseChange.AddListener(UpdateDefense);
+        UpdateHeroOffense(GameManager.instance.hero.GetOffense());
+        UpdateHeroDefense(GameManager.instance.hero.GetDefense());
+        GameManager.instance.hero.OnOffenseChange.AddListener(UpdateHeroOffense);
+        GameManager.instance.hero.OnDefenseChange.AddListener(UpdateHeroDefense);
     }
 
     public void UpdateOffense(int Atk)
     {
-        attackText.text = "Reccomended Attack: " + Atk;
+        questAtk = Atk;
+        UpdateAttackDisplay();
     }
 
     public void UpdateDefense(int Def)
     {
-        defenseText.text = "Reccomended Defense: " + Def;
+        questDef = Def;
+        UpdateDefenseDisplay();
     }
 
-    public void UpdateDescription(string text)
+    public void UpdateHeroOffense(int Atk)
     {
-        //descriptionText.text = text;
+        heroAtk = Atk;
+        UpdateAttackDisplay();
     }
+
+    public void UpdateHeroDefense(int Def)
+    {
+        heroDef = Def;
+        UpdateDefenseDisplay();
+    }
+
+    void UpdateAttackDisplay()
+    {
+        attackText.text = "Hero Attack: "+heroAtk + "\n Evil Attack: "+questAtk;
+    }
+
+    void UpdateDefenseDisplay()
+    {
+        defenseText.text = "Hero Defense: " + heroDef + "\n Evil Defense: " + questDef;
+    }
+
 
 
 }

@@ -8,6 +8,7 @@ public class Inventory : MonoBehaviour
 {
 
     public GameObject equipmentDisplayPrefab;
+    public GameObject potionDisplayPrefab;
     public float displayOffset = 10;
     public ScrollRect scrollRect;
 
@@ -46,6 +47,11 @@ public class Inventory : MonoBehaviour
             IEquipment equip = (IEquipment)item;
             AddEquipment(equip);
         }
+        else if (item is IPotion)
+        {
+            IPotion potion = (IPotion)item;
+            AddPotion(potion);
+        }
     }
 
     void AddEquipment(IEquipment item)
@@ -53,6 +59,15 @@ public class Inventory : MonoBehaviour
         GameObject newDisplayObject = Instantiate(equipmentDisplayPrefab, scrollRect.content);
         newDisplayObject.name = equipmentDisplayPrefab.name + " " + item.itemName;
         EquipmentInventoryDisplay newDisplay = newDisplayObject.GetComponent<EquipmentInventoryDisplay>();
+        newDisplay.SetItem(item, amounts[item]);
+        displays.Add(item, newDisplay);
+    }
+
+    void AddPotion(IPotion item)
+    {
+        GameObject newDisplayObject = Instantiate(potionDisplayPrefab, scrollRect.content);
+        newDisplayObject.name = potionDisplayPrefab.name + " " + item.itemName;
+        PotionInventoryDisplay newDisplay = newDisplayObject.GetComponent<PotionInventoryDisplay>();
         newDisplay.SetItem(item, amounts[item]);
         displays.Add(item, newDisplay);
     }
@@ -113,6 +128,7 @@ public class Inventory : MonoBehaviour
     {
         foreach (IItem item in items)
             AddItem(item, 0);
+        GenerateInventoryGUI();
     }
 
     public int GetTotalInventory()

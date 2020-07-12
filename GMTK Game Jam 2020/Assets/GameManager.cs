@@ -19,7 +19,8 @@ public class GameManager : MonoBehaviour
         Selling,
         CompletePurchase,
         DoQuest,
-        StartQuest
+        StartQuest,
+        SellingDone,
     }
 
     public static GameManager instance;
@@ -41,6 +42,7 @@ public class GameManager : MonoBehaviour
     public UnityEvent OnPurchasingEnter;
     public UnityEvent OnCompletePurchase;
     public UnityEvent OnSellingEnter;
+    public UnityEvent OnSellingExit;
     public UnityEvent OnStockingEnter;
     public UnityEvent OnRestockingEnter;
     public UnityEvent HeroAppears;
@@ -76,6 +78,16 @@ public class GameManager : MonoBehaviour
     public void StockEquipment(IEquipment item)
     {
         bool stocked = stock.AddEquipment(item);
+        if (stocked && state != GameStates.Purchasing)
+        {
+            if (!ItemInStock(item)) return;
+            inventory.DecrementAmount(item);
+        }
+    }
+
+    public void StockPotion(IPotion item)
+    {
+        bool stocked = stock.AddPotion(item);
         if (stocked && state != GameStates.Purchasing)
         {
             if (!ItemInStock(item)) return;
@@ -182,7 +194,10 @@ public class GameManager : MonoBehaviour
     public void IncreaseActiveQuestAttack(int defenseBoost)
     { quests[activeQuest].IncreaseAttackNeeded(defenseBoost); }
 
-
+    public Quest GetActiveQuest()
+    {
+        return quests[activeQuest];
+    }
 
     public void ChangeState(GameStates newState)
     {
@@ -211,6 +226,9 @@ public class GameManager : MonoBehaviour
                 break;
             case (GameStates.StartQuest):
                 StartNextQuest();
+                break;
+            case (GameStates.SellingDone):
+                OnSellingExit.Invoke();
                 break;
         }
     }

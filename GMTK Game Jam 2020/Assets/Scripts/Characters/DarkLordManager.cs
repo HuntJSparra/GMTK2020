@@ -64,5 +64,10 @@ public class DarkLordManager : MonoBehaviour
             GameManager.instance.IncreaseActiveQuestDefense(equipment.itemOffense);
             GameManager.instance.IncreaseActiveQuestAttack(equipment.itemDefense);
         }
+        else if (item is IPotion)
+        {
+            IPotion potion = (IPotion)item;
+            potion.UsePotion(GameManager.instance.GetActiveQuest());
+        }
     }
 }

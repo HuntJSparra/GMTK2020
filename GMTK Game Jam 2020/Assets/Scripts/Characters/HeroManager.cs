@@ -65,6 +65,11 @@ public class HeroManager : StatManager
             ChangeOffense(equipment.itemOffense);
             ChangeDefense(equipment.itemDefense);
         }
+        else if (item is IPotion)
+        {
+            IPotion potion = (IPotion)item;
+            potion.UsePotion(this);
+        }
     }
 
     public void GainMoney(int amount)
