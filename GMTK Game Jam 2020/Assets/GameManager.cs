@@ -114,6 +114,7 @@ public class GameManager : MonoBehaviour
 
     public void InitSelling()
     {
+        Debug.Log("Init selling");
         numTransactions = Random.Range(1, 3);
         ChooseVisitor();
     }
