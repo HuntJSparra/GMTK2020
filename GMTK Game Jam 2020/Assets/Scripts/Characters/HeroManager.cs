@@ -59,7 +59,12 @@ public class HeroManager : StatManager
 
     public void UseItem(IItem item)
     {
-
+        if (item is IEquipment)
+        {
+            IEquipment equipment = (IEquipment) item;
+            ChangeOffense(equipment.itemOffense);
+            ChangeDefense(equipment.itemDefense);
+        }
     }
 
 }

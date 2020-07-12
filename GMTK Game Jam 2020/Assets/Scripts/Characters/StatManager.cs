@@ -75,6 +75,7 @@ public class StatManager : MonoBehaviour
     {
         healthStat += value;
         OnHealthChange.Invoke(healthStat);
+        if (healthStat <= 0) OutOfHealth();
     }
 
     public void IncreaseHealth(int value) { ChangeHealth(Mathf.Abs(value)); }
@@ -95,4 +96,8 @@ public class StatManager : MonoBehaviour
     public void IncreaseMoney(int value) { ChangeMoney(Mathf.Abs(value)); }
     public void DecreaseMoney(int value) { ChangeMoney(-Mathf.Abs(value)); }
 
+    public virtual void OutOfHealth()
+    {
+        Debug.Log("Game Over, Hero is dead");
+    }
 }

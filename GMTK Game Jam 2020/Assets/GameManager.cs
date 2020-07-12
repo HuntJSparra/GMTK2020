@@ -30,7 +30,8 @@ public class GameManager : MonoBehaviour
     public Button nextButton;
     public Button yesButton;
     public Button noButton;
-    public GameObject IItemPrefab;
+    public QuestDisplay questDisplay;
+    public Quest[] quests = new Quest[4];
 
     public UnityEvent OnPurchasingEnter;
     public UnityEvent OnCompletePurchase;
@@ -41,6 +42,7 @@ public class GameManager : MonoBehaviour
     public UnityEvent DarkLordAppears;
 
     int numTransactions = -1;
+    int activeQuest = -1;
     Animator stateMachine;
 
     private void Awake()
@@ -53,15 +55,8 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         stateMachine = GetComponent<Animator>();
-        /*for (int i=0; i<20; i++)
-        {
-            GameObject IItemObject = Instantiate(IItemPrefab);
-            IItem item = IItemObject.GetComponent<IItem>();
-            item.itemName = "Item " + i;
-            inventory.AddItem(item);
-        }*/
         inventory.GenerateInventoryGUI();
-
+        StartNextQuest();
     }
 
     bool ItemInStock(IItem item)
@@ -125,6 +120,25 @@ public class GameManager : MonoBehaviour
             ChooseVisitor();
     }
 
+    public void AttemptActiveQuest()
+    {
+        string message = "";
+        bool success = quests[activeQuest].AttemptQuest(hero, out message);
+        SetText(message);
+        if (success) StartNextQuest();
+    }
+
+    public void StartNextQuest()
+    {
+        inventory.UnlockItems();
+        Debug.Log("Active Quest = " + activeQuest);
+        activeQuest++;
+        Debug.Log("Active Quest = " + activeQuest);
+        questDisplay.SetQuest(quests[activeQuest]);
+    }
+
+
+
     public void ChangeState(GameStates newState)
     {
         //if (state == newState) return;
@@ -178,7 +192,6 @@ public class GameManager : MonoBehaviour
         else stateMachine.SetInteger("ChoiceResponse", -1);
         yesButton.gameObject.SetActive(false);
         noButton.gameObject.SetActive(false);
-
     }
 
 

@@ -29,7 +29,7 @@ public class Inventory : MonoBehaviour
             Application.Quit();
         }
         scrollTitle = scrollRect.GetComponentInChildren<TextMeshProUGUI>();
-        UnlockItems();
+        //UnlockItems();
     }
 
     public void AddItem(IItem item, int amount = 1)

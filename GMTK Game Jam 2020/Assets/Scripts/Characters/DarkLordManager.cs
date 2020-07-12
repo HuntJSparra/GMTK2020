@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DarkLordManager : StatManager
+public class DarkLordManager : MonoBehaviour
 {
     public Image sprite;
+    public int money = 100;
     IItem chosenItem = null;
 
     private void Awake()
@@ -57,6 +58,6 @@ public class DarkLordManager : StatManager
 
     public void UseItem(IItem item)
     {
-
+        
     }
 }

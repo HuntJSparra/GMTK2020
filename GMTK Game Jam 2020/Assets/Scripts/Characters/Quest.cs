@@ -1,16 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Quest : MonoBehaviour
 {
 
-    public string QuestName;
+    public string questName;
     public Vector2 attackRange;
     public Vector2 defenseRange;
+    public string description;
     public string successMsg;
     public string failMsgSword;
     public string failMsgArmor;
+    public IntEvent OnOffenseChange;
+    public IntEvent OnDefenseChange;
     int attackNeeded;
     int defenseNeeded;
     bool completed = false;
@@ -23,7 +27,17 @@ public class Quest : MonoBehaviour
     }
 
     public int GetAttackNeeded() { return attackNeeded; }
+    public void IncreaseAttackNeeded(int defenseBoost)
+    {
+        attackNeeded += defenseBoost;
+        OnOffenseChange.Invoke(attackNeeded);
+    }
     public int GetDefenseNeeded() { return defenseNeeded; }
+    public void IncreaseDefenseNeeded(int attackBoost)
+    {
+        defenseNeeded += attackBoost;
+        OnDefenseChange.Invoke(defenseNeeded);
+    }
 
     public bool AttemptQuest(HeroManager hero, out string message)
     {
