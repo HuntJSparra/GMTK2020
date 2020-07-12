@@ -13,7 +13,8 @@ public class SMBShopping : StateMachineBehaviour
         RequestItem,
         RefusePurchase,
         AcceptPurchase,
-        Leave
+        Leave,
+        GiveChoice
     }
 
     public Shopper shopperName;
@@ -24,17 +25,30 @@ public class SMBShopping : StateMachineBehaviour
     {
        if (shopperName == Shopper.hero)
         {
+            GameManager.instance.HeroAppears.Invoke();
             switch (action)
             {
                 case (Action.RequestItem):
                     if (GameManager.instance.hero.ChooseItem())
+                    {
                         GameManager.instance.SetText(GameManager.instance.hero.RequestString());
+                    }
+                    break;
+                case (Action.GiveChoice):
+                    animator.SetInteger("ChoiceResponse", 0);
+                    GameManager.instance.GiveChoice("Please use it well.", "Um, well…you’re not a high enough level to use that.");
                     break;
                 case (Action.RefusePurchase):
+                    GameManager.instance.SetText(GameManager.instance.hero.LeaveString());
                     break;
                 case (Action.AcceptPurchase):
+                    GameManager.instance.hero.BuyItem();
+                    GameManager.instance.SetText(GameManager.instance.hero.LeaveString());
                     break;
                 case (Action.Leave):
+                    animator.SetBool("Sell2Hero", false);
+                    GameManager.instance.hero.sprite.enabled = false;
+                    GameManager.instance.SetText("");
                     break;
             }
 

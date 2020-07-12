@@ -43,7 +43,10 @@ public class ForSaleStock : MonoBehaviour
         equipmentStock.SetItem(item);
         stockDisplays.Add(equipmentStock);
         equipmentStocks.Add(equipmentStock);
-        if (purchaseMode) UpdateCost(item.GetBasePrice());
+        if (purchaseMode)
+        {
+            UpdateCost(item.GetBasePrice());
+        }
         ResizeStockRect();
         if (stockDisplays.Count == maxStock) ReadyToSell.Invoke(true);
         return true;
@@ -53,7 +56,7 @@ public class ForSaleStock : MonoBehaviour
     {
         for(int i=0; i<stockDisplays.Count;i++)
         {
-            if (stockDisplays[i].Equals(item))
+            if (stockDisplays[i].GetItem().Equals(item))
             {
                 return RemoveItem(stockDisplays[i]);
             }
@@ -121,6 +124,8 @@ public class ForSaleStock : MonoBehaviour
         {
             title.text = "Purchasing: ";
             purchaseButton.gameObject.SetActive(true);
+            purchaseButton.enabled = false;
+            purchaseButton.GetComponent<Image>().enabled = false;
         }
         purchaseMode = !purchaseMode;
     }
@@ -135,9 +140,18 @@ public class ForSaleStock : MonoBehaviour
     {
         if (!purchaseMode) return;
         totalCost += cost;
-        purchaseButtonTitle.text = "Purchase? Cost: " + totalCost;
-        if (totalCost > GameManager.instance.wallet.money) purchaseButton.enabled = false;
-        else purchaseButton.enabled = true;
+        if (totalCost > GameManager.instance.wallet.money || stockDisplays.Count < maxStock)
+        {
+            purchaseButton.enabled = false;
+            purchaseButton.GetComponent<Image>().enabled = false;
+            purchaseButtonTitle.text = "Cost: " + totalCost;
+        }
+        else
+        {
+            purchaseButton.enabled = true;
+            purchaseButton.GetComponent<Image>().enabled = true;
+            purchaseButtonTitle.text = "Purchase? Cost: " + totalCost;
+        }
     }
 
     public void MakePurchase()

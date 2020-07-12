@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class HeroManager : StatManager
 {
 
-    Image sprite;
+    public Image sprite;
     IItem chosenItem = null;
 
     private void Awake()
@@ -45,6 +45,16 @@ public class HeroManager : StatManager
     {
         if (!CanAffordItem()) return string.Format("Hero: I would like to buy the {0}, but it's too expensive, nya. Can I buy it for {1}?", chosenItem.itemName, money);
         else return string.Format("Hero: I would like to buy the {0}, nya.", chosenItem.itemName);
+    }
+
+    public string LeaveString()
+    {
+        if (chosenItem != null)
+        {
+            chosenItem = null;
+            return "Fine, I'll go somewhere else, nya...";
+        }
+        return "Thank you so much, nya! Time to save the world!";
     }
 
     public void UseItem(IItem item)

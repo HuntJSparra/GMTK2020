@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Animator))]
 public class GameManager : MonoBehaviour
@@ -25,6 +26,9 @@ public class GameManager : MonoBehaviour
     public Wallet wallet;
     public HeroManager hero;
     public TextMeshProUGUI textbox;
+    public Button nextButton;
+    public Button yesButton;
+    public Button noButton;
     public GameObject IItemPrefab;
 
     public UnityEvent OnPurchasingEnter;
@@ -32,6 +36,7 @@ public class GameManager : MonoBehaviour
     public UnityEvent OnSellingEnter;
     public UnityEvent OnStockingEnter;
     public UnityEvent OnRestockingEnter;
+    public UnityEvent HeroAppears;
 
     Animator stateMachine;
 
@@ -82,8 +87,17 @@ public class GameManager : MonoBehaviour
     public void SetText(string text)
     {
         textbox.text = text;
+        if (!text.Equals(string.Empty))
+            nextButton.gameObject.SetActive(true);
     }
 
+    public void GiveChoice(string yesText, string noText)
+    {
+        yesButton.GetComponentInChildren<TextMeshProUGUI>().text = yesText;
+        noButton.GetComponentInChildren<TextMeshProUGUI>().text = noText;
+        yesButton.gameObject.SetActive(true);
+        noButton.gameObject.SetActive(true);
+    }
 
     public void ChangeState(GameStates newState)
     {
@@ -121,6 +135,20 @@ public class GameManager : MonoBehaviour
     public void FullyStocked(bool stocked)
     {
         stateMachine.SetBool("FullyStocked", stocked);
+    }
+
+    public void NextDialogue()
+    {
+        stateMachine.SetTrigger("NextDialogue");
+    }
+
+    public void AnswerChoice(bool answer)
+    {
+        if (answer) stateMachine.SetInteger("ChoiceResponse", 1);
+        else stateMachine.SetInteger("ChoiceResponse", -1);
+        yesButton.gameObject.SetActive(false);
+        noButton.gameObject.SetActive(false);
+
     }
 
 
