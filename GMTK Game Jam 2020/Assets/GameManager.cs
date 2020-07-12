@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
         DoQuest,
         StartQuest,
         SellingDone,
+        GameOver
     }
 
     public static GameManager instance;
@@ -188,6 +189,16 @@ public class GameManager : MonoBehaviour
         SetOverlayText(quests[activeQuest].description);
     }
 
+    public void SetGameOver()
+    {
+        stateMachine.SetBool("GameOver", true);
+    }
+
+    public void GameOver()
+    {
+        SceneManager.LoadScene("GameOver");
+    }
+
     public void IncreaseActiveQuestDefense(int attackBoost)
     { quests[activeQuest].IncreaseDefenseNeeded(attackBoost); }
 
@@ -230,6 +241,9 @@ public class GameManager : MonoBehaviour
                 break;
             case (GameStates.SellingDone):
                 OnSellingExit.Invoke();
+                break;
+            case (GameStates.GameOver):
+                GameOver();
                 break;
         }
     }

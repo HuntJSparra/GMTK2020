@@ -54,7 +54,7 @@ public abstract class ItemStockDisplay : MonoBehaviour
         }
     }
 
-    protected void Restock()
+    public void Restock()
     {
         GameManager.instance.inventory.AddItem(item);
         GameManager.instance.stock.RemoveItem(this);

@@ -98,6 +98,6 @@ public class StatManager : MonoBehaviour
 
     public virtual void OutOfHealth()
     {
-        Debug.Log("Game Over, Hero is dead");
+        GameManager.instance.SetGameOver();
     }
 }
