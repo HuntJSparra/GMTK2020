@@ -51,6 +51,9 @@ public class GameManager : MonoBehaviour
     public UnityEvent DarkLordAppears;
     public UnityEvent DarkLordSpeaks;
     public UnityEvent DarkLordLeaves;
+    public UnityEvent OnQuestEnter;
+    public UnityEvent OnQuestSuccess;
+    public UnityEvent OnQuestFail;
 
     int numTransactions = -1;
     int activeQuest = -1;
@@ -161,10 +164,12 @@ public class GameManager : MonoBehaviour
 
     public void AttemptActiveQuest()
     {
+        OnQuestEnter.Invoke();
         string message = "";
         int reward = 0;
         bool success = quests[activeQuest].AttemptQuest(hero, out reward, out message);
-
+        if (success) OnQuestSuccess.Invoke();
+        else OnQuestFail.Invoke();
         hero.GainMoney(reward);
         SetOverlayText(message);
         //SetText(message);
