@@ -63,12 +63,12 @@ public class QuestDisplay : MonoBehaviour
 
     void UpdateAttackDisplay()
     {
-        attackText.text = "Hero Attack: "+heroAtk + "\n Evil Attack: "+questAtk;
+        attackText.text = "Hero Attack: "+heroAtk + "\n Need Attack: "+questAtk;
     }
 
     void UpdateDefenseDisplay()
     {
-        defenseText.text = "Hero Defense: " + heroDef + "\n Evil Defense: " + questDef;
+        defenseText.text = "Hero Defense: " + heroDef + "\n Need Defense: " + questDef;
     }
 
     void UpdateHealthDisplay(int health)
