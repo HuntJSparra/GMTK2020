@@ -58,6 +58,11 @@ public class DarkLordManager : MonoBehaviour
 
     public void UseItem(IItem item)
     {
-        
+        if (item is IEquipment)
+        {
+            IEquipment equipment = (IEquipment)item;
+            GameManager.instance.IncreaseActiveQuestDefense(equipment.itemOffense);
+            GameManager.instance.IncreaseActiveQuestAttack(equipment.itemDefense);
+        }
     }
 }

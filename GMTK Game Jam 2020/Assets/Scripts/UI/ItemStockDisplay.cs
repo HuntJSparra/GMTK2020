@@ -49,7 +49,7 @@ public abstract class ItemStockDisplay : MonoBehaviour
                 Restock();
                 break;
             case (GameManager.GameStates.Selling):
-                Sell();
+                //Sell();
                 break;
         }
     }

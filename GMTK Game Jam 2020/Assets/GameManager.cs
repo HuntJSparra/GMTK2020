@@ -16,7 +16,9 @@ public class GameManager : MonoBehaviour
         Start,
         Stocking, 
         Selling,
-        CompletePurchase
+        CompletePurchase,
+        DoQuest,
+        StartQuest
     }
 
     public static GameManager instance;
@@ -125,17 +127,23 @@ public class GameManager : MonoBehaviour
         string message = "";
         bool success = quests[activeQuest].AttemptQuest(hero, out message);
         SetText(message);
-        if (success) StartNextQuest();
+        stateMachine.SetBool("QuestSuccess", success);
     }
 
     public void StartNextQuest()
     {
         inventory.UnlockItems();
-        Debug.Log("Active Quest = " + activeQuest);
         activeQuest++;
-        Debug.Log("Active Quest = " + activeQuest);
         questDisplay.SetQuest(quests[activeQuest]);
+        SetText(quests[activeQuest].description);
     }
+    
+    public void IncreaseActiveQuestDefense(int attackBoost)
+    { quests[activeQuest].IncreaseDefenseNeeded(attackBoost); }
+
+
+    public void IncreaseActiveQuestAttack(int defenseBoost)
+    { quests[activeQuest].IncreaseAttackNeeded(defenseBoost); }
 
 
 
@@ -160,6 +168,12 @@ public class GameManager : MonoBehaviour
             case (GameStates.Restocking):
                 OnRestockingEnter.Invoke();
                 Selling(false);
+                break;
+            case (GameStates.DoQuest):
+                AttemptActiveQuest();
+                break;
+            case (GameStates.StartQuest):
+                StartNextQuest();
                 break;
         }
     }
@@ -193,6 +207,7 @@ public class GameManager : MonoBehaviour
         yesButton.gameObject.SetActive(false);
         noButton.gameObject.SetActive(false);
     }
+
 
 
 }
