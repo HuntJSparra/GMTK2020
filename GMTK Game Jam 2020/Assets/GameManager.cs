@@ -30,7 +30,9 @@ public class GameManager : MonoBehaviour
     public HeroManager hero;
     public DarkLordManager darkLord;
     public TextMeshProUGUI textbox;
+    public TextMeshProUGUI overlayTextbox;
     public Button nextButton;
+    public Button overlayNextButton;
     public Button yesButton;
     public Button noButton;
     public QuestDisplay questDisplay;
@@ -95,6 +97,13 @@ public class GameManager : MonoBehaviour
             nextButton.gameObject.SetActive(true);
     }
 
+    public void SetOverlayText(string text)
+    {
+        overlayTextbox.text = text;
+        if (!text.Equals(string.Empty))
+            overlayNextButton.gameObject.SetActive(true);
+    }
+
     public void GiveChoice(string yesText, string noText)
     {
         yesButton.GetComponentInChildren<TextMeshProUGUI>().text = yesText;
@@ -143,7 +152,8 @@ public class GameManager : MonoBehaviour
         bool success = quests[activeQuest].AttemptQuest(hero, out reward, out message);
 
         hero.GainMoney(reward);
-        SetText(message);
+        SetOverlayText(message);
+        //SetText(message);
 
         stateMachine.SetBool("QuestSuccess", success);
     }
@@ -160,7 +170,8 @@ public class GameManager : MonoBehaviour
         }
 
         questDisplay.SetQuest(quests[activeQuest]);
-        SetText(quests[activeQuest].description);
+        //SetText(quests[activeQuest].description);
+        SetOverlayText(quests[activeQuest].description);
     }
 
     public void IncreaseActiveQuestDefense(int attackBoost)
